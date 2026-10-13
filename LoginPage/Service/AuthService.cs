@@ -69,7 +69,7 @@ namespace LoginPage.Service
 
                 if (user.FailedLoginAttempts >= 3)
                 {
-                    user.LockoutEnd = DateTime.UtcNow.AddMinutes(1);
+                    user.LockoutEnd = DateTime.UtcNow.AddHours(1);
 
                 }
                 await _context.SaveChangesAsync();
