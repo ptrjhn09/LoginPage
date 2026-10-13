@@ -36,9 +36,12 @@ namespace LoginPage.Controllers
             var result = await _emailService.ForgotPasswordAsync(forgot);
 
             if (result == null)
+            {
                 return NotFound(new { message = "Email not found" });
+            }
+                
 
-            return Ok(new { token = result, message = "Reset token generated" });
+            return Ok(new {message = "Reset link generated" });
         }
     
     }

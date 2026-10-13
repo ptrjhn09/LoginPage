@@ -88,7 +88,21 @@ namespace LoginPage.Service
             user.PasswordResetTokenExpiry = DateTime.UtcNow.AddMinutes(10);
             await _context.SaveChangesAsync();
 
-            return token;
+
+
+
+            var resetLink = $"http://localhost:5173/register?token={token}";
+
+            var emailDto = new EmailDto
+            {
+                To = user.Email,
+                Subject = "Reset Password",
+                Body = resetLink
+            };
+
+            SendEmailAsync(emailDto);
+
+            return "Successful";
         }
 
 
