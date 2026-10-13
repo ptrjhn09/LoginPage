@@ -25,7 +25,7 @@ namespace LoginPage.Controllers
 
             return Ok(new
             {
-                message = "You have a sent new message!"
+                message = "You have sent new message!"
             });
         }
 
