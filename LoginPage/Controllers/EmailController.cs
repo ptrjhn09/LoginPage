@@ -17,7 +17,7 @@ namespace LoginPage.Controllers
             _emailService = emailService;
         }
 
-        [HttpPost ("SendEmaail")]
+        [HttpPost("SendEmaail")]
 
         public IActionResult SendEmailAsync(EmailDto request)
         {
@@ -29,7 +29,7 @@ namespace LoginPage.Controllers
             });
         }
 
-        [HttpPost ("ForgotPassowrd")]
+        [HttpPost("ForgotPassowrd")]
         public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordDto forgot)
         {
 
@@ -39,10 +39,15 @@ namespace LoginPage.Controllers
             {
                 return NotFound(new { message = "Email not found" });
             }
-                
 
-            return Ok(new {message = "Reset link generated" });
+
+            return Ok(result);
         }
-    
+
+        //[HttpPost("ResetPassword")]
+        //public async Task<IActionResult> ResetPassword(ResetPasswordDto reset)
+        //{
+        //    var result = _emailService.ResetPassword(reset);
+        //}
     }
 }

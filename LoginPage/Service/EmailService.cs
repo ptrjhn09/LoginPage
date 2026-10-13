@@ -62,7 +62,7 @@ namespace LoginPage.Service
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse("infodigital0909@gmail.com"));
-            email.To.Add(MailboxAddress.Parse(request.To)); 
+            email.To.Add(MailboxAddress.Parse(request.To));
             email.Subject = request.Subject;
             email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
@@ -71,6 +71,8 @@ namespace LoginPage.Service
             smtp.Authenticate("infodigital0909@gmail.com", "dxap qlgq wynp kfsz");
             smtp.Send(email);
             smtp.Disconnect(true);
+
+
 
         }
 
@@ -82,16 +84,16 @@ namespace LoginPage.Service
                 return null;
             }
 
-            var token = await GeneratePasswordResetToken(user);
+            var resetToken = await GeneratePasswordResetToken(user);
 
-            user.PasswordResetToken = token;
+            user.PasswordResetToken = resetToken;
             user.PasswordResetTokenExpiry = DateTime.UtcNow.AddMinutes(10);
             await _context.SaveChangesAsync();
 
 
 
 
-            var resetLink = $"http://localhost:5173/register?token={token}";
+            var resetLink = $"http://localhost:5173/reset-Password?token={resetToken}";
 
             var emailDto = new EmailDto
             {
@@ -102,8 +104,13 @@ namespace LoginPage.Service
 
             SendEmailAsync(emailDto);
 
-            return "Successful";
+            return resetToken;
         }
+
+        //public async Task<string?> ResetPassword(ResetPasswordDto reset)
+        //{
+
+        //}
 
 
     }

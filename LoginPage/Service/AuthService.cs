@@ -104,5 +104,7 @@ namespace LoginPage.Service
             return "User Registered Successfully";
 
         }
+
+
     }
 }

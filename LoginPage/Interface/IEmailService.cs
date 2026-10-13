@@ -8,5 +8,6 @@ namespace LoginPage.Interface
         void SendEmailAsync(EmailDto request);
         Task <string?> ForgotPasswordAsync(ForgotPasswordDto forgot);
         Task<string> GeneratePasswordResetToken(User user);
+        //Task<string?> ResetPassword(ResetPasswordDto reset);
     }
 }
