@@ -1,19 +1,22 @@
 using LoginPage.Data;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
+//using Scalar.AspNetCore;
 using LoginPage.Interface;
 using LoginPage.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+//builder.Services.AddOpenApi();
 
 builder.Services.AddCors(options =>
 {
@@ -31,6 +34,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
        builder.Configuration.GetConnectionString("DConnection")));
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IProducts, ProductService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -58,15 +62,16 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 
-
-
-// Configure the HTTP request pipeline.dw
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    //app.MapOpenApi();
 }
 
-app.MapScalarApiReference();
+// Configure the HTTP request pipeline.dw
+
+//app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 app.UseCors("AllowReact");

@@ -29,25 +29,6 @@ namespace LoginPage.Controllers
             });
         }
 
-        [HttpPost("ForgotPassowrd")]
-        public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordDto forgot)
-        {
-
-            var result = await _emailService.ForgotPasswordAsync(forgot);
-
-            if (result == null)
-            {
-                return NotFound(new { message = "Email not found" });
-            }
-
-
-            return Ok(result);
-        }
-
-        //[HttpPost("ResetPassword")]
-        //public async Task<IActionResult> ResetPassword(ResetPasswordDto reset)
-        //{
-        //    var result = _emailService.ResetPassword(reset);
-        //}
+        
     }
 }

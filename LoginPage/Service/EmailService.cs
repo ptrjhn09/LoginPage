@@ -17,46 +17,7 @@ namespace LoginPage.Service
 {
     public class EmailService : IEmailService
     {
-
-        private readonly IConfiguration _config;
-        private readonly AppDbContext _context;
-
-        public EmailService(IConfiguration config, AppDbContext context)
-        {
-            _config = config;
-            _context = context;
-        }
-
-        public async Task<string> GeneratePasswordResetToken(User user)
-        {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim("purpose", "reset-password"),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-
-            };
-
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_config["JWT:Key"]!)
-                );
-
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken
-                (
-                issuer: _config["JWT:PasswordResetIssuer"],
-                audience: _config["JWT:PasswordResetAudience"],
-                claims:claims,
-                expires:DateTime.UtcNow.AddMinutes(10),
-                signingCredentials:credentials
-
-                );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-
+  
 
         public void SendEmailAsync(EmailDto request)
         {
@@ -73,45 +34,7 @@ namespace LoginPage.Service
             smtp.Disconnect(true);
 
 
-
         }
-
-        public async Task<string?> ForgotPasswordAsync(ForgotPasswordDto forgot)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(e => e.Email == forgot.Email);
-            if (user == null)
-            {
-                return null;
-            }
-
-            var resetToken = await GeneratePasswordResetToken(user);
-
-            user.PasswordResetToken = resetToken;
-            user.PasswordResetTokenExpiry = DateTime.UtcNow.AddMinutes(10);
-            await _context.SaveChangesAsync();
-
-
-
-
-            var resetLink = $"http://localhost:5173/reset-Password?token={resetToken}";
-
-            var emailDto = new EmailDto
-            {
-                To = user.Email,
-                Subject = "Reset Password",
-                Body = resetLink
-            };
-
-            SendEmailAsync(emailDto);
-
-            return resetToken;
-        }
-
-        //public async Task<string?> ResetPassword(ResetPasswordDto reset)
-        //{
-
-        //}
-
 
     }
 }

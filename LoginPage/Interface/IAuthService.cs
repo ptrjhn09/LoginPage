@@ -9,5 +9,11 @@ namespace LoginPage.Interface
         Task<string?> RegisterAsync(RegisterDto request);
 
         Task<string> GenerateToken(User user);
+
+        Task<string?> ForgotPasswordAsync(ForgotPasswordDto forgot);
+        Task<string> GeneratePasswordResetToken(User user);
+
+        Task<string?> ResetPassword(ResetPasswordDto reset);
+
     }
 }
