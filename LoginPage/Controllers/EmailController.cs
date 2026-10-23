@@ -17,7 +17,7 @@ namespace LoginPage.Controllers
             _emailService = emailService;
         }
 
-        [HttpPost ("SendEmaail")]
+        [HttpPost("SendEmaail")]
 
         public IActionResult SendEmailAsync(EmailDto request)
         {
@@ -29,20 +29,6 @@ namespace LoginPage.Controllers
             });
         }
 
-        [HttpPost ("ForgotPassowrd")]
-        public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordDto forgot)
-        {
-
-            var result = await _emailService.ForgotPasswordAsync(forgot);
-
-            if (result == null)
-            {
-                return NotFound(new { message = "Email not found" });
-            }
-                
-
-            return Ok(new {message = "Reset link generated" });
-        }
-    
+        
     }
 }

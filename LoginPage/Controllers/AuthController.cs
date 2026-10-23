@@ -61,5 +61,34 @@ namespace LoginPage.Controllers
                 message = "Successfully Registered",
             });
         }
+
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPasswordAsync(ForgotPasswordDto forgot)
+        {
+           
+            var result = await _authservice.ForgotPasswordAsync(forgot);
+
+            if (result == null)
+            {
+                return BadRequest(new { message = "Email not found" });
+            }
+            
+
+            return Ok(new {message="Reset Email link send Succesfully"});
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto reset)
+        {
+            var result = await _authservice.ResetPassword(reset);
+
+            if(result != "Password Reset Succesfuly")
+            {
+                return BadRequest(new { message = result });
+            }
+
+            return Ok(new { message = result });
+
+        }
     }
 }
