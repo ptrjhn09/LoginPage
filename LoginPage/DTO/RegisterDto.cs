@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LoginPage.DTO
+namespace EyeWearProduct.DTO
 {
     public class RegisterDto
     {

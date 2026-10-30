@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using LoginPage.Model;
+using EyeWearProduct.Model;
 
-namespace LoginPage.Data
+namespace EyeWearProduct.Data
 {
     public class AppDbContext : DbContext
     {
@@ -11,6 +11,8 @@ namespace LoginPage.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<ProductDetails> ProductDetails { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

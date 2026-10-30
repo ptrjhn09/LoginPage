@@ -1,7 +1,7 @@
-﻿using LoginPage.DTO;
-using LoginPage.Model;
+﻿using EyeWearProduct.DTO;
+using EyeWearProduct.Model;
 
-namespace LoginPage.Interface
+namespace EyeWearProduct.Interface
 {
     public interface IEmailService
     {

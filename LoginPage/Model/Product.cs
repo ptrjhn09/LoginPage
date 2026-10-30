@@ -1,12 +1,14 @@
-﻿namespace LoginPage.Model
+﻿namespace EyeWearProduct.Model
 {
     public class Product
     {
-        public int Id { get; set; }
-        public string ProductName { get; set; } = "";
-        public string Category { get; set; } = "";
-        public int Price { get; set; }
-        public int Stock { get; set; }
+        public int ProductId { get; set; }
+        public int ProductDetailId { get; set; }
+        public int CategoryId { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
 
+        //public ProductDetails? ProductDetails { get; set; }
+        //public Category? Category { get; set; }
     }
 }

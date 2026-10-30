@@ -1,8 +1,8 @@
-﻿using LoginPage.Interface;
-using LoginPage.Model;
+﻿using EyeWearProduct.Interface;
+using EyeWearProduct.Model;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoginPage.Controllers
+namespace EyeWearProduct.Controllers
 {
 
     [ApiController]
@@ -18,15 +18,16 @@ namespace LoginPage.Controllers
         }
 
 
-        [HttpPost("Add-Product")]
-        public async Task<IActionResult> AddProductsAsync(Product product)
-        {
-            var result = await _product.AddProductsAsync(product);
-            if (result != null)
+            [HttpPost("Add-Product")]
+            public async Task<IActionResult> AddProductsAsync(ProductDetailsDto dto)
             {
-                return Ok(result);
+                var result = await _product.AddProductsAsync(dto);
+                if (!result)
+            {         
+                return BadRequest("Product already exists");
             }
-            return BadRequest("Failed to add product");
+            return Ok("Succsesfuly added a product");
+
         }
 
         [HttpGet("Total-Product")]
@@ -39,7 +40,7 @@ namespace LoginPage.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProductAsync(int id, Product product)
+        public async Task<IActionResult> UpdateProductAsync(int id, ProductDetails product)
         {
             var UpdateProduct = await _product.UpdateProductAsync(id,product);
 

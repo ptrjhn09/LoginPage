@@ -1,4 +1,4 @@
-﻿namespace LoginPage.DTO
+﻿namespace EyeWearProduct.DTO
 {
     public class EmailDto
     {

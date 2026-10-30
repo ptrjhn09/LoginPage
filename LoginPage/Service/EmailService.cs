@@ -1,7 +1,7 @@
-﻿using LoginPage.Data;
-using LoginPage.DTO;
-using LoginPage.Interface;
-using LoginPage.Model;
+﻿using EyeWearProduct.Data;
+using EyeWearProduct.DTO;
+using EyeWearProduct.Interface;
+using EyeWearProduct.Model;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,7 +13,7 @@ using MimeKit.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-namespace LoginPage.Service
+namespace EyeWearProduct.Service
 {
     public class EmailService : IEmailService
     {

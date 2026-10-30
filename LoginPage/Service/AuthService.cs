@@ -1,14 +1,14 @@
-﻿using LoginPage.Data;
-using LoginPage.DTO;
-using LoginPage.Interface;
-using LoginPage.Model;
+﻿using EyeWearProduct.Data;
+using EyeWearProduct.DTO;
+using EyeWearProduct.Interface;
+using EyeWearProduct.Model;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-namespace LoginPage.Service
+namespace EyeWearProduct.Service
 {
     public class AuthService : IAuthService
     {
@@ -238,10 +238,6 @@ namespace LoginPage.Service
             {
                 return "Invalid or Expired Token";
             }
-
-
-           
-
 
         }
 

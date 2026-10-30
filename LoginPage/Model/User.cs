@@ -1,4 +1,6 @@
-﻿namespace LoginPage.Model
+﻿
+namespace EyeWearProduct.Model
+
 {
     public class User
     {

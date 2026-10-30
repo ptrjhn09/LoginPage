@@ -1,15 +1,33 @@
-using LoginPage.Data;
+using EyeWearProduct.Data;
 using Microsoft.EntityFrameworkCore;
 //using Scalar.AspNetCore;
-using LoginPage.Interface;
-using LoginPage.Service;
+using EyeWearProduct.Interface;
+using EyeWearProduct.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using dotenv.net;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+//SET CLoudinary credentials
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+//Cloudinary cloud = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+//cloud.Api.Secure = true;
+
+var account = new Account
+    (
+    Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME"),
+    Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY"),
+    Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET")
+    );
+
+var cloud = new Cloudinary (account);
+cloud.Api.Secure = true;
+builder.Services.AddSingleton(cloud);
 
 builder.Services.AddControllers();
 

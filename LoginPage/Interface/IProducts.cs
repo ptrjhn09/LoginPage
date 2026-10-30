@@ -1,14 +1,14 @@
-﻿using LoginPage.Model;
+﻿using EyeWearProduct.Model;
 
-namespace LoginPage.Interface
+namespace EyeWearProduct.Interface
 {
     public interface IProducts
     {
-        Task<string?> AddProductsAsync(Product product);
+        Task<bool> AddProductsAsync(ProductDetailsDto dto);
 
-        Task<int> TotalProductAsync();
+        Task<List<ProductDetailsDto>> TotalProductAsync();
 
-        Task<string?> UpdateProductAsync(int id, Product product);
+        Task<string?> UpdateProductAsync(int id, ProductDetails product);
 
         Task<string?> DeleteProductAsync(int id);
     }

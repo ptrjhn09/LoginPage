@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using LoginPage.Data;
-using LoginPage.DTO;
-using LoginPage.Interface;
-using LoginPage.Service;
+using EyeWearProduct.Data;
+using EyeWearProduct.DTO;
+using EyeWearProduct.Interface;
+using EyeWearProduct.Service;
 using Microsoft.AspNetCore.Authorization;
 
-namespace LoginPage.Controllers
+namespace EyeWearProduct.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
