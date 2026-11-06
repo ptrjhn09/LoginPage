@@ -8,6 +8,7 @@
         public int Price { get; set; }
         public int Stock { get; set; }
         public string? ImageUrl { get; set; }
+        public IFormFile? Image { get; set; }
         public string? ProductCategory { get; set; }
         public int CategoryId { get; set; }
 
@@ -16,3 +17,4 @@
         public DateTime? ModifyDate { get; set; }
     }
 }
+

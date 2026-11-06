@@ -8,8 +8,8 @@ namespace EyeWearProduct.Interface
 
         Task<List<ProductDetailsDto>> TotalProductAsync();
 
-        Task<string?> UpdateProductAsync(int id, ProductDetails product);
+        Task<string?> UpdateProductAsync(int productDetailId, ProductDetailsDto dto);
 
-        Task<string?> DeleteProductAsync(int id);
+        Task<string?> DeleteProductAsync(int productDeatildId);
     }
 }

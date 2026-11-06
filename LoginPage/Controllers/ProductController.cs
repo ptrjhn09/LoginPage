@@ -19,7 +19,7 @@ namespace EyeWearProduct.Controllers
 
 
             [HttpPost("Add-Product")]
-            public async Task<IActionResult> AddProductsAsync(ProductDetailsDto dto)
+            public async Task<IActionResult> AddProductsAsync([FromForm]ProductDetailsDto dto)
             {
                 var result = await _product.AddProductsAsync(dto);
                 if (!result)
@@ -39,10 +39,10 @@ namespace EyeWearProduct.Controllers
             return Ok(totalProducts);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProductAsync(int id, ProductDetails product)
+        [HttpPut("{productDetailId}")]
+        public async Task<IActionResult> UpdateProductAsync(int productDetailId, [FromForm] ProductDetailsDto dto)
         {
-            var UpdateProduct = await _product.UpdateProductAsync(id,product);
+            var UpdateProduct = await _product.UpdateProductAsync(productDetailId, dto);
 
             if(UpdateProduct == null)
             {
@@ -52,10 +52,10 @@ namespace EyeWearProduct.Controllers
             return Ok(UpdateProduct);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult>DeleteProductAsynce(int id)
+        [HttpDelete("{productDetailId}")]
+        public async Task<IActionResult>DeleteProductAsynce(int productDetailId)
         {
-            var deleteProducts = await _product.DeleteProductAsync(id);
+            var deleteProducts = await _product.DeleteProductAsync(productDetailId);
 
             if(deleteProducts == null)
             {

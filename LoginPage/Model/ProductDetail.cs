@@ -4,7 +4,7 @@ namespace EyeWearProduct.Model
 
 
 {
-    public class ProductDetails
+    public class ProductDetail
     {
         [Key]
         public int ProductDetailId { get; set; }
@@ -13,6 +13,7 @@ namespace EyeWearProduct.Model
         public int Price { get; set; }
         public int Stock { get; set; }
         public string? ImageUrl { get; set; }
+        public string CloudinaryPublicId { get; set; }
 
         public  DateTime CreateDate { get; set; }
 

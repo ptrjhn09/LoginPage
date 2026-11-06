@@ -14,51 +14,61 @@ namespace EyeWearProduct.Service
     {
         private readonly AppDbContext _context;
         private readonly Cloudinary _cloud;
+        private readonly ICloudinaryService _cloudinaryService;
 
-        public ProductService(AppDbContext context, Cloudinary cloud)
+        public ProductService(AppDbContext context, Cloudinary cloud, ICloudinaryService cloudinaryService)
         {
             _context = context;
             _cloud = cloud;
-
+            _cloudinaryService = cloudinaryService;
         }
 
 
 
         public async Task<bool> AddProductsAsync(ProductDetailsDto dto)
         {
-
-            var extProduct = await _context.ProductDetails.FirstOrDefaultAsync(x => x.ProductName == dto.ProductName);
+            var extProduct = await _context.ProductDetails
+                .FirstOrDefaultAsync(x => x.ProductName == dto.ProductName);
 
             if (extProduct != null)
             {
                 return false;
             }
 
-            var ProductDetails = new ProductDetails
+               if(dto.Image == null)
+            {
+                return false;
+            }
+
+            var uploadResult =
+                await _cloudinaryService.UploadImageAsync(dto.Image);
+
+         
+
+            var productDetails = new ProductDetail
             {
                 ProductName = dto.ProductName,
                 Description = dto.Description,
                 Price = dto.Price,
                 Stock = dto.Stock,
-                ImageUrl = dto.ImageUrl,
+                ImageUrl = uploadResult.ImageUrl,
+                CloudinaryPublicId = uploadResult.PublicId,
+
                 CreateDate = DateTime.Now
             };
 
-            _context.ProductDetails.Add(ProductDetails);
+            _context.ProductDetails.Add(productDetails);
             await _context.SaveChangesAsync();
-
 
             var product = new Product
             {
-                ProductDetailId = ProductDetails.ProductDetailId,
-                CategoryId = dto.CategoryId,//assign value in category section FE
+                ProductDetailId = productDetails.ProductDetailId,
+                CategoryId = dto.CategoryId,
                 CreateDate = DateTime.Now
-
             };
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
-
 
             return true;
         }
@@ -86,36 +96,61 @@ namespace EyeWearProduct.Service
             
         }
 
-        public async Task<string?> UpdateProductAsync(int id, ProductDetails product)
+        public async Task<string?> UpdateProductAsync(int productDetailId, ProductDetailsDto dto)
         {
-            var existingProducts = await _context.ProductDetails.FindAsync(id);
+            var existingProducts = await _context.ProductDetails.FindAsync(productDetailId);
 
             if (existingProducts == null)
             {
                 return null;
             }
 
+            if (dto.Image != null)
+            {
+                await _cloudinaryService.DeleteImageAsync(existingProducts.CloudinaryPublicId);
 
-            existingProducts.ProductName = product.ProductName;
-            //existingProducts.Category = product.Category;
-            existingProducts.Price = product.Price;
-            existingProducts.Stock = product.Stock;
+                var uploadResult = await _cloudinaryService.UploadImageAsync(dto.Image);
 
+                existingProducts.ImageUrl = uploadResult.ImageUrl;
+
+                existingProducts.CloudinaryPublicId = uploadResult.PublicId;
+            }
+
+
+            existingProducts.ProductName = dto.ProductName;
+            existingProducts.Price = dto.Price;
+            existingProducts.Description = dto.Description;
+            existingProducts.Stock = dto.Stock;
             existingProducts.ModifyDate = DateTime.Now;
+               
+
+            var prod = await _context.Products.FirstOrDefaultAsync(x => x.ProductDetailId == productDetailId);
+
+            if(prod != null)
+            {
+                prod.CategoryId = dto.CategoryId;
+                prod.ModifyDate = DateTime.Now;
+            }
+
             await _context.SaveChangesAsync();
+
+
             return "Succesfully update product";
 
-          }        
 
-        public async Task<string?> DeleteProductAsync(int id)
+        }        
+
+        public async Task<string?> DeleteProductAsync(int productDeatildId)
         {
-            var Existingproduct = await _context.ProductDetails.FindAsync(id);
+            var Existingproduct = await _context.ProductDetails.FindAsync(productDeatildId);
             if(Existingproduct == null)
             {
                 return null;
             }
 
-             _context.Remove(Existingproduct);
+
+            await _cloudinaryService .DeleteImageAsync(Existingproduct.CloudinaryPublicId);
+            _context.Remove(Existingproduct);
             await _context.SaveChangesAsync();
             return "Product deleted succsesfuly";
         }

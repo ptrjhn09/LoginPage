@@ -38,6 +38,59 @@ namespace EyeWearProduct.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("EyeWearProduct.Model.Order", b =>
+                {
+                    b.Property<int>("orderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("orderId"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductDetailsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("orderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("EyeWearProduct.Model.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Contact")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("TotalAmount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("OrderDetailId");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("EyeWearProduct.Model.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -63,13 +116,17 @@ namespace EyeWearProduct.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("EyeWearProduct.Model.ProductDetails", b =>
+            modelBuilder.Entity("EyeWearProduct.Model.ProductDetail", b =>
                 {
                     b.Property<int>("ProductDetailId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductDetailId"));
+
+                    b.Property<string>("CloudinaryPublicId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");

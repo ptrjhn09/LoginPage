@@ -14,9 +14,7 @@ using dotenv.net;
 var builder = WebApplication.CreateBuilder(args);
 
 //SET CLoudinary credentials
-DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
-//Cloudinary cloud = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
-//cloud.Api.Secure = true;
+DotEnv.Load(options: new DotEnvOptions(probeForEnv: true)); //read env file
 
 var account = new Account
     (
@@ -53,6 +51,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IProducts, ProductService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
