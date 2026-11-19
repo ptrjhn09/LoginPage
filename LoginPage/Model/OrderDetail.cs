@@ -10,6 +10,7 @@
         public string? Address { get; set; }
         public long TotalAmount { get; set; }
         public DateTime OrderDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
 
 
     }

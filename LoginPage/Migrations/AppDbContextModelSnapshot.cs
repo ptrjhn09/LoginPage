@@ -49,6 +49,9 @@ namespace EyeWearProduct.Migrations
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("OrderDetailId")
                         .HasColumnType("int");
 
@@ -79,6 +82,9 @@ namespace EyeWearProduct.Migrations
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");

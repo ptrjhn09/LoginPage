@@ -19,14 +19,16 @@ namespace EyeWearProduct.Controllers
         public async Task<IActionResult> AddOrderAsync(OrderItemDto dto)
         {
             var result = await _orderService.AddOrderAsync(dto);
-            if(result == null)
+
+            if (result != "Successfuly Order")
             {
                 return BadRequest(result);
             }
+
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("Get-AllOrders")]
         public async Task<IActionResult> GetAllOrders()
         {
             var result = await _orderService.GetAllOrders();
@@ -44,6 +46,20 @@ namespace EyeWearProduct.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPut("{orderDetailId}")]
+
+        public async Task<IActionResult> UpdateOrderAsync(int orderDetailId, OrderItemDto dto)
+        {
+            var updateOrder = await _orderService.UpdateOrderAsync(orderDetailId, dto);
+
+            if(updateOrder != "Successfully updated the order")
+            {
+                return BadRequest(updateOrder);
+            }
+
+            return Ok(updateOrder);
         }
     }
 }

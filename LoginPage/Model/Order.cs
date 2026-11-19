@@ -7,6 +7,7 @@
         public int ProductDetailsId { get; set; }
         public int Quantity { get; set; }
         public DateTime? CreateDate { get; set; }
+        public DateTime? ModifyDate { get; set; }
 
     }
 }
