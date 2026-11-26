@@ -90,6 +90,7 @@ namespace EyeWearProduct.Service
                               Stock = pd.Stock,
                               ProductCategory = c.ProductCategory,
                               ImageUrl = pd.ImageUrl
+                              
 
                           }
                           ).ToListAsync();

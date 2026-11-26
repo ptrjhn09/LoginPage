@@ -15,6 +15,8 @@
 
         public string? productName { get; set; }
         public string? imageUrl { get; set; }
+
+        public string? Status { get; set; }
     }
 
 }

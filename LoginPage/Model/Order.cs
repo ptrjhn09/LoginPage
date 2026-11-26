@@ -5,6 +5,7 @@
         public int orderId { get; set; }
         public int OrderDetailId { get; set; }
         public int ProductDetailsId { get; set; }
+        public int UserId { get; set; }
         public int Quantity { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? ModifyDate { get; set; }

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EyeWearProduct.Data;
+﻿using EyeWearProduct.Data;
 using EyeWearProduct.DTO;
 using EyeWearProduct.Interface;
 using EyeWearProduct.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace EyeWearProduct.Controllers
 {
@@ -42,7 +43,9 @@ namespace EyeWearProduct.Controllers
         {
             return Ok(new
             {
-                message = "You are authenticated!"
+                userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+                email = User.FindFirst(ClaimTypes.Email)?.Value,
+                role = User.FindFirst(ClaimTypes.Role)?.Value
             });
         }
 

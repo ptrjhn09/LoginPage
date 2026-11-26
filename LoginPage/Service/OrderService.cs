@@ -1,4 +1,5 @@
 ﻿using CloudinaryDotNet.Actions;
+using CloudinaryDotNet.Core;
 using EyeWearProduct.Data;
 using EyeWearProduct.DTO;
 using EyeWearProduct.Interface;
@@ -54,10 +55,25 @@ namespace EyeWearProduct.Service
                 OrderDetailId = OrderDetails.OrderDetailId,
                 ProductDetailsId = dto.ProductDetailId,
                 Quantity = dto.Quantity,
-                CreateDate = DateTime.Now
-            };
+                CreateDate = DateTime.Now,
+
+             
+            };   
 
             _context.Orders.Add(orders);
+            await _context.SaveChangesAsync();
+
+            var tracking = new TrackingHistory
+            {
+                OrderDetailId = OrderDetails.OrderDetailId,
+                Status = "Pending",
+                CreatedDate = DateTime.Now,
+                StatusDate = DateTime.Now
+
+
+            };
+
+            _context.TrackingHistory.Add(tracking);
             await _context.SaveChangesAsync();
             return "Successfuly Order";
         }
@@ -69,6 +85,8 @@ namespace EyeWearProduct.Service
                           on o.OrderDetailId equals od.OrderDetailId
                           join pd in _context.ProductDetails
                           on o.ProductDetailsId equals pd.ProductDetailId
+                          join th in _context.TrackingHistory
+                          on od.OrderDetailId equals th.OrderDetailId
                           select new OrderItemDto
                           {
                               OrderDetailId = od.OrderDetailId,
@@ -80,8 +98,9 @@ namespace EyeWearProduct.Service
                               Contact = od.Contact,
                               Address = od.Address,
                               OrderDate = od.OrderDate,
-                              Price = pd.Price
-                          } 
+                              Price = pd.Price,
+                              Status = th.Status
+                          }
 
                 ).ToListAsync();
         }
@@ -147,7 +166,7 @@ namespace EyeWearProduct.Service
             }
 
             var difference = dto.Quantity - order.Quantity;
-            //fixing logic here
+           
             if (difference > 0)
             {
                 if (product.Stock < difference)

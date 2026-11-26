@@ -61,6 +61,9 @@ namespace EyeWearProduct.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("orderId");
 
                     b.ToTable("Orders");
@@ -160,13 +163,38 @@ namespace EyeWearProduct.Migrations
                     b.ToTable("ProductDetails");
                 });
 
-            modelBuilder.Entity("EyeWearProduct.Model.User", b =>
+            modelBuilder.Entity("EyeWearProduct.Model.TrackingHistory", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TrackingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrackingId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StatusDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TrackingId");
+
+                    b.ToTable("TrackingHistory");
+                });
+
+            modelBuilder.Entity("EyeWearProduct.Model.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -188,7 +216,10 @@ namespace EyeWearProduct.Migrations
                     b.Property<DateTime?>("PasswordResetTokenExpiry")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });

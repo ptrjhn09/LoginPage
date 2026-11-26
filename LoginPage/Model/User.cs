@@ -4,7 +4,7 @@ namespace EyeWearProduct.Model
 {
     public class User
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";
         public int FailedLoginAttempts { get; set; }
@@ -12,6 +12,7 @@ namespace EyeWearProduct.Model
         public string? PasswordResetToken { get; set; }
 
         public DateTime? PasswordResetTokenExpiry { get; set; }
+        public string? Role { get; set; }
 
     }
 }

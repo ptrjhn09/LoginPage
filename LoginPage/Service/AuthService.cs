@@ -56,7 +56,9 @@ namespace EyeWearProduct.Service
 
             var Claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
+                  new Claim(ClaimTypes.Role, user.Role ?? "Customer")
 
             };
 
@@ -128,6 +130,7 @@ namespace EyeWearProduct.Service
             {
                 Email = request.Email,
                 Password = request.Password,
+                Role = "Customer"
 
             };
 
